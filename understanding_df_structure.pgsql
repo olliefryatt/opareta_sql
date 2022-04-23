@@ -1,3 +1,4 @@
+-- This is just script to make sure I understand how the data structure looks like
 
 -- 1. User kyc table (Airtable)
 with airtable as (

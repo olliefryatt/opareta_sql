@@ -217,31 +217,36 @@ select
         ELSE 'Error, should not happen'
     END AS final_category_label
 from df_assessment_type_category
-)
+),
 
 -- Final results
-select
-    -- Backgroud info on agent & category they are assesed by
-    df_agent_category.unique_id,
-    first_activity,
-    age +1 as agent_days_on_platform,
-    assessment_type,
-    -- Transaction criteria
-    COALESCE(transactions_4wks, 0) as transactions_in_last_4wks,
-    COALESCE(averge_tx_per_day_in_period, 0) as averge_tx_per_day_in_period,
-    trn_criteria_met_label,
-    trn_criteria_met_numeric,
-    -- Activity rate
-    ndays_4wks as nday_active_in_last_4wks,
-    days_active_per_in_period,
-    active_rate_criteria_met_label,
-    active_rate_criteria_met_numeric,
-    -- Final category
-    final_category_label,
-    final_category_numeric
-from df_agent_category
-join df_assessment_type_category on df_assessment_type_category.unique_id = df_agent_category.unique_id
-order by first_activity desc
+df_results as (
+    select
+        -- Backgroud info on agent & category they are assesed by
+        df_agent_category.unique_id,
+        first_activity,
+        age +1 as agent_days_on_platform,
+        assessment_type,
+        -- Transaction criteria
+        COALESCE(transactions_4wks, 0) as transactions_in_last_4wks,
+        COALESCE(averge_tx_per_day_in_period, 0) as averge_tx_per_day_in_period,
+        trn_criteria_met_label,
+        trn_criteria_met_numeric,
+        -- Activity rate
+        ndays_4wks as nday_active_in_last_4wks,
+        days_active_per_in_period,
+        active_rate_criteria_met_label,
+        active_rate_criteria_met_numeric,
+        -- Final category
+        final_category_label,
+        final_category_numeric
+    from df_agent_category
+    join df_assessment_type_category on df_assessment_type_category.unique_id = df_agent_category.unique_id
+    order by first_activity desc
+)
+
+select *
+from df_results
 
 /* 
 -- Some specific agents with which we can QA results
