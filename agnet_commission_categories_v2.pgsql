@@ -25,8 +25,8 @@ select
     -- Cacluate Av Tran per day, Calc used depends on Assessment type
     CASE
         WHEN assessment_type = '28_days' THEN (transactions_4wks / 28)
-        WHEN assessment_type = 'under_28_days_prorated' THEN (transactions_4wks / age)
-        WHEN assessment_type = 'under_7_days_unassigned' THEN (transactions_4wks / age)
+        WHEN assessment_type = 'under_28_days_prorated' THEN (transactions_4wks / (age+1))
+        WHEN assessment_type = 'under_7_days_unassigned' THEN (transactions_4wks / (age+1))
         ELSE 0
     END AS averge_tx_per_day_in_period,
     -- Caclulate Active rate, Calc used depends on Assessment type

@@ -1,7 +1,6 @@
 
 -- check if balance filter explains drop in unique users in commision
 
-
 -- See currnet list (567)
 select count(DISTINCT(unique_id)) 
 from metrics.user_activity_stats
